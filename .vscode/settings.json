@@ -1,0 +1,10 @@
+{
+    "python.pythonPath": "/home/musu/Desktop/Tetris/musuenv/bin/python3.8"
+}
+"python.linting.pylintArgs": [
+    "--extension-pkg-whitelist=lxml"  // The extension is "lxml" not "1xml"
+]
+
+"python.linting.pylintArgs": [
+    "--unsafe-load-any-extension=y"
+]
