@@ -299,7 +299,7 @@ def clear_rows(grid,locked):
 
 def draw_window(surface):
       surface.fill((0,0,0))
-      font=pygame.font.SysFont('comicsans',60)
+      font=pygame.font.SysFont('arial',50,bold= False)
       label=font.render('TETRIS',1,(255,255,255))
       surface.blit(label,(top_left_x+play_width/2-(label.get_width()/2),30))
 
@@ -322,7 +322,7 @@ def draw_grid(surface,row,col):
 
 def draw_next_shape(piece,surface):
       font=pygame.font.SysFont('comicsans',30)
-      label=font.render('next shape',1,(255,255,255))
+      label=font.render('Next Shape',1,(255,255,255))
 
       sx=top_left_x+play_width+50
       sy=top_left_y+play_height/2-100
@@ -335,11 +335,11 @@ def draw_next_shape(piece,surface):
             j=0
             for column in row:
                   if column=='0':
-                        pygame.draw.rect(surface,piece.color,(sx+j*30,sy+i*30,30,30),0)
+                        pygame.draw.rect(surface,piece.color,(sx+j*30,sy+i*25,30,30),0)
 
                   j+=1
             i+=1
-      surface.blit(label,(sx+10,sy-30))
+      surface.blit(label,(sx+15,sy-30))
       update_score(surface)
 
 def update_score(surface):
@@ -349,7 +349,7 @@ def update_score(surface):
 
       sx=top_left_x+play_width+40
       sy=top_left_y+play_height/2 - 100
-      surface.blit(label,(sx+10,sy+150))
+      surface.blit(label,(sx+25,sy+140))
 
 def check_lost(positions):
       for pos in positions:
