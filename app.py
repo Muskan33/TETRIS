@@ -112,15 +112,15 @@ T = [['.....',
 # GLOBALS VARIABLES
 
 shapes = [S, Z, I, O, J, L, T]
-shape_colors = [(0, 255, 0), (255, 0, 0), (0, 255, 255), (255, 255, 0), (255, 165, 0), (0, 0, 255), (128, 0, 128)]
+shape_colors = [(51,255,51), (255, 120, 0), (128,0,96), (255,0,0), (0,0,179), (255,255,0), (0, 255, 255)]
 # index 0 - 6 represent shape
 block_size=30
 w_width = 800
 w_height = 700
 play_width = 300  # meaning 300 // 10 = 30 width per block
 play_height = 600  # meaning 600 // 20 = 30 height per block
-pygame.mixer.init(4410, -16,2,2048)
-mixer.music.load('music.mp3')
+pygame.mixer.init(44100,-16,2,2048)
+music=mixer.music.load('music.mp3')
 
 
 top_left_x = (w_width - play_width) // 2
@@ -205,7 +205,7 @@ def move_piece(event,current_piece):
 def play():
 # A global variable grid
       global grid
-      mixer.music.play(-1)
+      mixer.music.play()
 # The positions already occupied
       locked_positions = { }
 # create_grid returns the created grid
@@ -219,6 +219,7 @@ def play():
 
       fall_time=0
       while run:
+            
             fall_speed=0.5
             grid=create_grid(locked_positions)
             fall_time += clock.get_rawtime()
