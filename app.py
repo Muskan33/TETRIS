@@ -1,5 +1,6 @@
 import pygame
 import random
+from pygame import mixer
 pygame.font.init()
 
 
@@ -118,7 +119,9 @@ w_width = 800
 w_height = 700
 play_width = 300  # meaning 300 // 10 = 30 width per block
 play_height = 600  # meaning 600 // 20 = 30 height per block
-block_size = 30
+pygame.mixer.init(4410, -16,2,2048)
+mixer.music.load('music.mp3')
+
 
 top_left_x = (w_width - play_width) // 2
 top_left_y = w_height - play_height
@@ -147,6 +150,7 @@ def game():
       run = True
 # Our game runs until 'run' is made 'False'
       while run:
+           
 # Fill the window with Black Colour (RGB Value)
             window.fill (( 0,0,0 ))
 # Display this text in the middle of the window
@@ -201,6 +205,7 @@ def move_piece(event,current_piece):
 def play():
 # A global variable grid
       global grid
+      mixer.music.play(-1)
 # The positions already occupied
       locked_positions = { }
 # create_grid returns the created grid
@@ -304,7 +309,7 @@ def draw_window(surface):
 
 
       draw_grid(surface,20,10)
-      pygame.draw.rect(surface,(255,0,0),(top_left_x,top_left_y,play_width,play_height),5)
+      pygame.draw.rect(surface,(128,128,128),(top_left_x,top_left_y,play_width,play_height),5)
 
 def draw_grid(surface,row,col):
       sx=top_left_x
