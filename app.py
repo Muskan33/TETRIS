@@ -119,8 +119,7 @@ w_width = 800
 w_height = 700
 play_width = 300  # meaning 300 // 10 = 30 width per block
 play_height = 600  # meaning 600 // 20 = 30 height per block
-pygame.mixer.init(44100,-16,2,2048)
-music=mixer.music.load('music.mp3')
+pause= False
 
 
 top_left_x = (w_width - play_width) // 2
@@ -179,9 +178,19 @@ def draw_text_middle(text, size, color, surface):
       play_height/2 - label.get_height()/2))
 
 
+def pause_text(text, size, color, surface):
+      # Which font do you want to use?
+      font = pygame.font.SysFont('comicsans', size, bold=True)
+      # Render the Text using font
+      label = font.render(text, 1, color)
+      # Print the Text using label
+      surface.blit(label, (top_left_x - 30, top_left_y + 350))
+
+
+
 
 def move_piece(event,current_piece):
-      if event.type == pygame.KEYDOWN:
+                  if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_LEFT:
                               current_piece.x -= 1
                               if not valid_space(current_piece,grid):
@@ -200,17 +209,41 @@ def move_piece(event,current_piece):
                               current_piece.rotation = current_piece.rotation + 1% len(current_piece.shape)
                               if not valid_space(current_piece, grid):
                                     current_piece.rotation = current_piece.rotation - 1% len(current_piece.shape)
+                        
+                
+def paused():
+      pause = True
+      z.fill((255,255,255))
+      draw_text_middle("PAUSED",60,(0,0,0),z)
+      pause_text("PRESS SPACE TO CONTINUE",40,(0,0,0),z)
+      
+      pygame.display.update()
+      clock=pygame.time.Clock()
+      clock.tick(5)
+
+      while pause:
+            for event in pygame.event.get():
+                  if event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_SPACE:
+                              pause= False
+
+                  if event.type == pygame.QUIT:
+                        pygame.display.quit()
+                        quit()
+
+     
+           
+                                    
 
 
 def play():
 # A global variable grid
       global grid
-      mixer.music.play()
 # The positions already occupied
       locked_positions = { }
 # create_grid returns the created grid
       grid = create_grid(locked_positions)
-
+      
       change_piece=False
       run =True
       current_piece=get_shape()
@@ -220,7 +253,7 @@ def play():
       fall_time=0
       while run:
             
-            fall_speed=0.5
+            fall_speed=0.3
             grid=create_grid(locked_positions)
             fall_time += clock.get_rawtime()
 
@@ -240,7 +273,10 @@ def play():
                         run=False
                         pygame.display.quit()
                         quit()
-                  
+                  if event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_SPACE:
+                              pause=True
+                              paused()
 
                   move_piece(event,current_piece)
 
@@ -404,6 +440,8 @@ def create_grid(locked_positions):
                         c=locked_positions[(j,i)]
                         grid[i][j] = c
       return grid
+
+z = pygame.display.set_mode((w_width, w_height))
 
 window = pygame.display.set_mode((w_width, w_height))
 pygame.display.set_caption('TETRIS')
