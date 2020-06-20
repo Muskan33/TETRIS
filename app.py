@@ -2,7 +2,7 @@ import pygame
 import random
 from pygame import mixer
 pygame.font.init()
-pygame.mixer.init(frequency=4410, size=-16, channels=2, buffer=300)
+pygame.mixer.init(frequency=4410, size=-16, channels=2, buffer=512)
 
 
 #BACKGROUND MUSIC
