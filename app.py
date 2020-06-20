@@ -136,7 +136,6 @@ top_left_x = (w_width - play_width) // 2
 top_left_y = w_height - play_height
 score=0
 level=0
-
 #CLASS
 class Piece:
 
@@ -166,7 +165,7 @@ def game():
       while run:
 # Fill the window with Black Colour (RGB Value)
             window.fill (( 0,0,0 ))
-            pygame.mixer.unpause()
+            #pygame.mixer.unpause()
             
 # Display this text in the middle of the window
             draw_text_middle("Press any key to begin!", 60, (255, 255, 255), window)
@@ -283,10 +282,20 @@ def paused():
                         pygame.display.quit()
                         quit()
 
-     
-           
-                                    
+def get_speed(level):
 
+
+      if   level==0:
+            speed = 1
+      if level==1:
+            speed=0.5
+      if level==2:
+            speed= 0.25
+      if level==3:
+            speed=0.125
+     
+
+      return speed
 
 def play():
 # A global variable grid
@@ -301,14 +310,12 @@ def play():
       current_piece=get_shape()
       next_piece=get_shape()
       clock=pygame.time.Clock()
-
       fall_time=0
       while run:
             
-            fall_speed=0.3
+            fall_speed=update_level(score)
             grid=create_grid(locked_positions)
             fall_time += clock.get_rawtime()
-
             clock.tick()
 
             if fall_time/1000>=fall_speed:
@@ -354,10 +361,10 @@ def play():
             
             draw_window(window)
             draw_next_shape(next_piece,window)
+            update_level(score)
             pygame.display.update()
 
             if check_lost(locked_positions):
-                  pygame.mixer.pause()
                   run = False
       window.fill((0,0,0))
       draw_text_middle("YOU LOST",80,(255,255,255),window)
@@ -386,6 +393,31 @@ def clear_rows(grid,locked):
                         newkey=(x,y+inc)
                         locked[newkey]=locked.pop(key)
             score+=(10*inc)       
+def intro_text():
+      font = pygame.font.SysFont('arial', 13)
+      label = font.render("Welcome to the Classic TETRIS", 1, (105,105,105))
+      window.blit(label, (top_left_x - 215, top_left_y + 320))
+      font = pygame.font.SysFont('arial', 11)
+      label = font.render("During a single gamerun your SCORE", 1, (105,105,105))
+      window.blit(label, (top_left_x - 215, top_left_y + 350))
+      font = pygame.font.SysFont('arial', 11)
+      label = font.render("and LEVEL progress will be saved", 1, (105,105,105))
+      window.blit(label, (top_left_x - 205, top_left_y + 362))
+      font = pygame.font.SysFont('arial', 13)
+      label = font.render("GAME consists of 4 LEVELS", 1, (105,105,105))
+      window.blit(label, (top_left_x - 205, top_left_y + 380))
+      font = pygame.font.SysFont('arial', 13)
+      label = font.render("starting from 0 ", 1, (105,105,105))
+      window.blit(label, (top_left_x - 165, top_left_y + 392))
+      font = pygame.font.SysFont('arial', 13)
+      label = font.render("You unlock new levels at the ", 1, (105,105,105))
+      window.blit(label, (top_left_x - 205, top_left_y + 410))
+      font = pygame.font.SysFont('arial', 13)
+      label = font.render("SCORE of 50, 150 AND 300", 1, (105,105,105))
+      window.blit(label, (top_left_x - 205, top_left_y + 425))
+      font = pygame.font.SysFont('arial', 13)
+      label = font.render("With each level speed increases", 1, (105,105,105))
+      window.blit(label, (top_left_x - 215, top_left_y + 445))
 
 def draw_window(surface):
       surface.fill((0,0,0))
@@ -402,6 +434,9 @@ def draw_window(surface):
       pygame.draw.rect(surface,(128,128,128),(top_left_x,top_left_y,play_width,play_height),5)
       pygame.draw.rect(surface,(50,50,50),(top_left_x-225,top_left_y+85,200,120),1)
       help_text()
+      pygame.draw.rect(surface,(50,50,50),(top_left_x-225,top_left_y+300,200,180),1)
+      intro_text()
+      
 
 
 def draw_grid(surface,row,col):
@@ -436,13 +471,38 @@ def draw_next_shape(piece,surface):
       update_score(surface)
 
 def update_score(surface):
+ 
       text= "Score: " + str(score)
+      
       font=pygame.font.SysFont('comicsans',40)
       label=font.render(text,1,(255,255,255))
-
       sx=top_left_x+play_width+40
       sy=top_left_y+play_height/2 - 100
       surface.blit(label,(sx+25,sy+140))
+
+def update_level(score):
+      if score<50:
+            level=0
+            s=get_speed(level)
+      if score>=50 and score<150:
+            level=1
+            s=get_speed(level)
+      elif score>=150 and score<300:
+            level=2
+            s=get_speed(level)
+      elif score>=300:
+            level=3
+            s=get_speed(level)
+      font=pygame.font.SysFont('arial',20,bold=True)
+      text2="LEVEL : " + str(level)
+      label2= font.render(text2,2,(119,136,153))
+      sx=top_left_x+play_width+40
+      sy=top_left_y+play_height/2 - 100
+      window.blit(label2,(sx+35,sy+190))
+      
+      return s
+
+      
 
 def check_lost(positions):
       for pos in positions:
