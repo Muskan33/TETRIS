@@ -122,25 +122,6 @@ play_height = 600  # meaning 600 // 20 = 30 height per block
 pause= False
 icon=pygame.image.load('icon2.png')
 icon_small = pygame.transform.scale(icon, (800, 600))
-
-def tetris_icon(x,y,run):
-      
-      window.blit(icon_small,(x-25,y+20))
-      font = pygame.font.SysFont('arial',50)
-      # Render the Text using font
-      label = font.render("Tetris", 1, (128,128,128))
-      # Print the Text using label
-      window.blit(label, ( x+320, y+200))
-      pygame.display.update()
-      clock=pygame.time.Clock()
-      pygame.time.wait(1000)
-      clock.tick()
-      pygame.display.update()
-
-
-
-
-
 top_left_x = (w_width - play_width) // 2
 top_left_y = w_height - play_height
 score=0
@@ -199,6 +180,38 @@ def draw_text_middle(text, size, color, surface):
       surface.blit(label, (top_left_x + play_width/2 - (label.get_width() / 2), top_left_y +
       play_height/2 - label.get_height()/2))
 
+
+def tetris_icon(x,y,run):
+      
+      window.blit(icon_small,(x-25,y+20))
+      font = pygame.font.SysFont('arial',50)
+      # Render the Text using font
+      label = font.render("Tetris", 1, (128,128,128))
+      # Print the Text using label
+      window.blit(label, ( x+320, y+200))
+      pygame.display.update()
+      clock=pygame.time.Clock()
+      pygame.time.wait(1000)
+      clock.tick()
+      pygame.display.update()
+
+def help_text():
+      
+      font = pygame.font.SysFont('arial', 13)
+      label = font.render("move left                ←", 1, (105,105,105))
+      window.blit(label, (top_left_x - 210, top_left_y + 100))
+      font = pygame.font.SysFont('arial', 13)
+      label = font.render("move right              →", 1, (105,105,105))
+      window.blit(label, (top_left_x - 210, top_left_y + 120))
+      font = pygame.font.SysFont('arial', 13)
+      label = font.render("move down            ↓", 1, (105,105,105))
+      window.blit(label, (top_left_x - 210, top_left_y + 140))
+      font = pygame.font.SysFont('arial',13)
+      label = font.render("change shape       ↑", 1, (105,105,105))
+      window.blit(label, (top_left_x - 210, top_left_y + 160))
+      font = pygame.font.SysFont('arial', 13)
+      label = font.render("pause/unpause     space", 1, (105,105,105))
+      window.blit(label, (top_left_x - 210, top_left_y + 180))
 
 def pause_text(text, size, color, surface):
       # Which font do you want to use?
@@ -369,6 +382,9 @@ def draw_window(surface):
 
       draw_grid(surface,20,10)
       pygame.draw.rect(surface,(128,128,128),(top_left_x,top_left_y,play_width,play_height),5)
+      pygame.draw.rect(surface,(50,50,50),(top_left_x-225,top_left_y+85,200,120),1)
+      help_text()
+
 
 def draw_grid(surface,row,col):
       sx=top_left_x
