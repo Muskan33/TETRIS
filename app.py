@@ -2,6 +2,13 @@ import pygame
 import random
 from pygame import mixer
 pygame.font.init()
+pygame.mixer.init(frequency=4410, size=-16, channels=2, buffer=300)
+
+
+#BACKGROUND MUSIC
+bg_music=pygame.mixer.Sound("music.ogg")
+
+
 
 
 # SHAPE FORMATS
@@ -125,6 +132,7 @@ icon_small = pygame.transform.scale(icon, (800, 600))
 top_left_x = (w_width - play_width) // 2
 top_left_y = w_height - play_height
 score=0
+level=0
 
 #CLASS
 class Piece:
@@ -147,14 +155,17 @@ class Piece:
 def game():
       window.fill((0,0,0))
       
-     
+      
       run = True
       tetris_icon(20,20,run)
+      bg_music.set_volume(0.06)
 # Our game runs until 'run' is made 'False'
       while run:
            
 # Fill the window with Black Colour (RGB Value)
             window.fill (( 0,0,0 ))
+          
+            bg_music.play(-1)
 # Display this text in the middle of the window
             draw_text_middle("Press any key to begin!", 60, (255, 255, 255), window)
 # Update the screen
@@ -191,7 +202,7 @@ def tetris_icon(x,y,run):
       window.blit(label, ( x+320, y+200))
       pygame.display.update()
       clock=pygame.time.Clock()
-      pygame.time.wait(1000)
+      pygame.time.wait(800)
       clock.tick()
       pygame.display.update()
 
@@ -247,6 +258,8 @@ def move_piece(event,current_piece):
                         
                 
 def paused():
+
+      pygame.mixer.pause()
       pause = True
       z.fill((255,255,255))
       draw_text_middle("PAUSED",60,(0,0,0),z)
@@ -260,6 +273,7 @@ def paused():
             for event in pygame.event.get():
                   if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_SPACE:
+                              pygame.mixer.unpause()
                               pause= False
 
                   if event.type == pygame.QUIT:
@@ -340,6 +354,7 @@ def play():
             pygame.display.update()
 
             if check_lost(locked_positions):
+                  pygame.mixer.stop()
                   run = False
       window.fill((0,0,0))
       draw_text_middle("YOU LOST",80,(255,255,255),window)
