@@ -111,8 +111,8 @@ T = [['.....',
 
 # GLOBALS VARIABLES
 
-shapes = [S, Z, I, O, J, L, T]
-shape_colors = [(51,255,51), (255, 120, 0), (128,0,96), (255,0,0), (0,0,179), (255,255,0), (0, 255, 255)]
+shapes = [S, J, T, I, O, L, Z]
+shape_colors = [(173,255,47), (0,0,205), (128,0,128), (0,191,255), (255,255,0), (255,165,0), (255,0,0)]
 # index 0 - 6 represent shape
 block_size=30
 w_width = 800
@@ -120,6 +120,25 @@ w_height = 700
 play_width = 300  # meaning 300 // 10 = 30 width per block
 play_height = 600  # meaning 600 // 20 = 30 height per block
 pause= False
+icon=pygame.image.load('icon2.png')
+icon_small = pygame.transform.scale(icon, (800, 600))
+
+def tetris_icon(x,y,run):
+      
+      window.blit(icon_small,(x-25,y+20))
+      font = pygame.font.SysFont('arial',50)
+      # Render the Text using font
+      label = font.render("Tetris", 1, (128,128,128))
+      # Print the Text using label
+      window.blit(label, ( x+320, y+200))
+      pygame.display.update()
+      clock=pygame.time.Clock()
+      pygame.time.wait(1000)
+      clock.tick()
+      pygame.display.update()
+
+
+
 
 
 top_left_x = (w_width - play_width) // 2
@@ -145,8 +164,11 @@ class Piece:
             self.rotation = 0
 
 def game():
-
+      window.fill((0,0,0))
+      
+     
       run = True
+      tetris_icon(20,20,run)
 # Our game runs until 'run' is made 'False'
       while run:
            
@@ -184,7 +206,7 @@ def pause_text(text, size, color, surface):
       # Render the Text using font
       label = font.render(text, 1, color)
       # Print the Text using label
-      surface.blit(label, (top_left_x - 30, top_left_y + 350))
+      surface.blit(label, (top_left_x - 80, top_left_y + 350))
 
 
 
