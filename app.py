@@ -268,9 +268,9 @@ def paused():
 
       pygame.mixer.pause()
       pause = True
-      z.fill((255,255,255))
-      draw_text_middle("PAUSED",60,(0,0,0),z)
-      pause_text("PRESS SPACE TO CONTINUE",40,(0,0,0),z)
+      window.fill((255,255,255))
+      draw_text_middle("PAUSED",60,(0,0,0),window)
+      pause_text("PRESS SPACE TO CONTINUE",40,(0,0,0),window)
       
       pygame.display.update()
       clock=pygame.time.Clock()
@@ -423,6 +423,12 @@ def intro_text():
       font = pygame.font.SysFont('arial', 13)
       label = font.render("With each level speed increases", 1, (105,105,105))
       window.blit(label, (top_left_x - 215, top_left_y + 445))
+      font = pygame.font.SysFont('arial', 11)
+      label = font.render("RESET button will remove all your", 1, (255,0,0))
+      window.blit(label, (top_left_x - 205, top_left_y + 465))
+      font = pygame.font.SysFont('arial', 11)
+      label = font.render("SCORE and LEVEL progress", 1, (255,0,0))
+      window.blit(label, (top_left_x - 195, top_left_y + 480))
 
 def draw_window(surface):
       surface.fill((0,0,0))
@@ -439,7 +445,7 @@ def draw_window(surface):
       pygame.draw.rect(surface,(128,128,128),(top_left_x,top_left_y,play_width,play_height),5)
       pygame.draw.rect(surface,(50,50,50),(top_left_x-225,top_left_y+85,200,120),1)
       help_text()
-      pygame.draw.rect(surface,(50,50,50),(top_left_x-225,top_left_y+300,200,180),1)
+      pygame.draw.rect(surface,(50,50,50),(top_left_x-225,top_left_y+300,200,200),1)
       intro_text()
       reset_button(surface)
       quit_button(surface)
@@ -650,7 +656,7 @@ def create_grid(locked_positions):
                         grid[i][j] = c
       return grid
 
-z = pygame.display.set_mode((w_width, w_height))
+
 
 window = pygame.display.set_mode((w_width, w_height))
 pygame.display.set_caption('TETRIS')
