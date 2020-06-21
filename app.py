@@ -466,9 +466,9 @@ def draw_window(surface):
 
       draw_grid(surface,20,10)
       pygame.draw.rect(surface,(128,128,128),(top_left_x,top_left_y,play_width,play_height),5)
-      pygame.draw.rect(surface,(50,50,50),(26,188,200,120),1)
+      pygame.draw.rect(surface,(50,50,50),(26,188,180,120),1)
       help_text()
-      pygame.draw.rect(surface,(50,50,50),(26,400,200,200),1)
+      pygame.draw.rect(surface,(50,50,50),(26,400,180,200),1)
       intro_text()
       pause_button(surface)
       reset_button(surface)
