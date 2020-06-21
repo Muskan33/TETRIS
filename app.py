@@ -8,7 +8,7 @@ pygame.mixer.init(frequency=44100, size=-16, channels=1, buffer=512)
 #BACKGROUND MUSIC
 bg_music=pygame.mixer.Sound("music.ogg")
 bg_music.set_volume(0.06)
-bg_music.play(-1)
+
 
 
 
@@ -156,8 +156,11 @@ class Piece:
 
 def game():
       window.fill((0,0,0))
-      
-      
+      global score
+      global level
+      score=0
+      level=0
+      bg_music.play(-1)
       run = True
       tetris_icon(20,20,run)
       
@@ -199,7 +202,7 @@ def tetris_icon(x,y,run):
       window.blit(icon_small,(x-25,y+20))
       font = pygame.font.SysFont('arial',50)
       # Render the Text using font
-      label = font.render("Tetris", 1, (128,128,128))
+      label = font.render("Tetris", 1, (192,192,192))
       # Print the Text using label
       window.blit(label, ( x+320, y+200))
       pygame.display.update()
@@ -436,7 +439,47 @@ def draw_window(surface):
       help_text()
       pygame.draw.rect(surface,(50,50,50),(top_left_x-225,top_left_y+300,200,180),1)
       intro_text()
+      reset_button(surface)
+      quit_button(surface)
+
+
+def reset_button(surface):
+
+      mouse = pygame.mouse.get_pos()
+      click = pygame.mouse.get_pressed()
+      #print(mouse)
+      if 635+100 > mouse[0] > 635 and 575+50 > mouse[1] > 575:
+            pygame.draw.rect(surface, (128,128,128),(635,575,80,30))
+            if click[0] == 1 :
+                  bg_music.stop()
+                  game()
+                     
+      else:
+            pygame.draw.rect(surface, (220,220,220),(635,575,80,30))
       
+      button_text = pygame.font.SysFont("freesansbold",22)
+      label= button_text.render('RESET',1,(0,0,0))
+      surface.blit(label,(650,585))
+      
+
+def quit_button(surface):
+      mouse = pygame.mouse.get_pos()
+      click = pygame.mouse.get_pressed()
+      if 635+100 > mouse[0] > 635 and 620+50 > mouse[1] > 620:
+            pygame.draw.rect(surface,(128,128,128),(635,620,80,30))
+            if click[0] == 1 :
+                  pygame.quit()
+                  quit()
+
+
+      else:
+            pygame.draw.rect(surface,(220,220,220),(635,620,80,30))
+
+
+      button_text = pygame.font.SysFont("freesansbold",22)
+      label= button_text.render('QUIT',1,(0,0,0))
+      surface.blit(label,(656,630))
+
 
 
 def draw_grid(surface,row,col):
