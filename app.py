@@ -136,6 +136,8 @@ top_left_x = (w_width - play_width) // 2
 top_left_y = w_height - play_height
 score=0
 level=0
+quitval= False
+resetval= False
 #CLASS
 class Piece:
 
@@ -451,8 +453,7 @@ def reset_button(surface):
       if 635+100 > mouse[0] > 635 and 575+50 > mouse[1] > 575:
             pygame.draw.rect(surface, (128,128,128),(635,575,80,30))
             if click[0] == 1 :
-                  bg_music.stop()
-                  game()
+                  reset_window()
                      
       else:
             pygame.draw.rect(surface, (220,220,220),(635,575,80,30))
@@ -468,9 +469,7 @@ def quit_button(surface):
       if 635+100 > mouse[0] > 635 and 620+50 > mouse[1] > 620:
             pygame.draw.rect(surface,(128,128,128),(635,620,80,30))
             if click[0] == 1 :
-                  pygame.quit()
-                  quit()
-
+                  quit_window()
 
       else:
             pygame.draw.rect(surface,(220,220,220),(635,620,80,30))
@@ -481,6 +480,57 @@ def quit_button(surface):
       surface.blit(label,(656,630))
 
 
+
+
+def quit_window():
+      pygame.mixer.pause()
+      quitval = True
+      window.fill((0,0,0))
+      draw_text_middle("Press ESCAPE to quit and any other key to return to the game screen",25,(220,220,200),window)
+      pygame.display.update()
+      clock=pygame.time.Clock()
+      clock.tick(5)
+
+      while quitval:
+            for event in pygame.event.get():
+                  if event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_ESCAPE:
+                              pygame.quit()
+                              quit()
+                        else:
+                              pygame.mixer.unpause()
+
+                              quitval= False
+
+                  if event.type == pygame.QUIT:
+                        pygame.display.quit()
+                        quit()
+                  
+def reset_window():
+      pygame.mixer.pause()
+      resetval = True
+      window.fill((0,0,0))
+      draw_text_middle("Press 'R' key to reset and any other key to return to the game screen",25,(220,220,200),window)
+      pygame.display.update()
+      clock=pygame.time.Clock()
+      clock.tick(5)
+
+      while resetval:
+            for event in pygame.event.get():
+                  if event.type == pygame.KEYUP:
+                        if event.key == pygame.K_r:
+                              bg_music.stop()
+                              game()
+                        else:
+                              pygame.mixer.unpause()
+
+                              resetval= False
+
+                  if event.type == pygame.QUIT:
+                        pygame.display.quit()
+                        quit()
+                  
+      
 
 def draw_grid(surface,row,col):
       sx=top_left_x
