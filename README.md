@@ -30,8 +30,8 @@ python3 app.py
 
 ## Help
 
-In case of " No audio device found error" , try unplugging and plaugging your headset.
-Also try muting the microphone and make sure you arent using you audio device with any other program .
+In case of " No audio device found error" , try unplugging and plugging your headset.
+Also try muting the microphone and make sure you arent using your audio device with any other program .
 
 ## License
 
