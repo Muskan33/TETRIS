@@ -7,7 +7,7 @@ pygame.mixer.init(frequency=44100, size=-16, channels=1, buffer=512)
 
 #BACKGROUND MUSIC
 bg_music=pygame.mixer.Sound("music.ogg")
-bg_music.set_volume(0.06)
+bg_music.set_volume(0.2)
 
 
 
@@ -173,21 +173,44 @@ def game():
             #pygame.mixer.unpause()
             
 # Display this text in the middle of the window
-            draw_text_middle("Press any key to begin!", 60, (255, 255, 255), window)
+            draw_text_start("Press start button to begin!", 60, (255, 255, 255), window)
+            start_button()
 # Update the screen
             pygame.display.update()
 
             # Track every event while the game is running
             for event in pygame.event.get():
-            # If the user presses any key, start playing the game!
-                  if event.type == pygame.KEYDOWN:
-                       
-                        play()
             # If user clicks on the 'cross' to quit, make run = False
                   if event.type == pygame.QUIT:
                         run = False
                         
       pygame.quit()
+
+
+def start_button():
+
+      mouse = pygame.mouse.get_pos()
+      click = pygame.mouse.get_pressed()
+      if 300+200 > mouse[0] > 300 and 380+100 > mouse[1] > 380:
+            pygame.draw.rect(window, (0,255,127),(300,380,200,100))
+            if click[0] == 1 :
+                  play()
+                     
+      else:
+            pygame.draw.rect(window, (0,250,154),(300,380,200,100))
+      
+      button_text = pygame.font.SysFont("arial",40,bold= True)
+      label= button_text.render('Start',1,(0,0,0))
+      window.blit(label,(355,410))
+
+def draw_text_start(text, size, color, surface):
+      # Which font do you want to use?
+      font = pygame.font.SysFont('comicsans', size, bold=True)
+      # Render the Text using font
+      label = font.render(text, 1, color)
+      # Print the Text using label
+      surface.blit(label, (top_left_x + play_width/2 - (label.get_width() / 2), top_left_y +
+      play_height/2 - label.get_height()/2-100))
 
 def draw_text_middle(text, size, color, surface):
       # Which font do you want to use?
@@ -217,19 +240,19 @@ def help_text():
       
       font = pygame.font.SysFont('arial', 13)
       label = font.render("move left                ←", 1, (105,105,105))
-      window.blit(label, (top_left_x - 210, top_left_y + 100))
+      window.blit(label, (40,205))
       font = pygame.font.SysFont('arial', 13)
       label = font.render("move right              →", 1, (105,105,105))
-      window.blit(label, (top_left_x - 210, top_left_y + 120))
+      window.blit(label, (40,225))
       font = pygame.font.SysFont('arial', 13)
       label = font.render("move down            ↓", 1, (105,105,105))
-      window.blit(label, (top_left_x - 210, top_left_y + 140))
+      window.blit(label, (40,245))
       font = pygame.font.SysFont('arial',13)
       label = font.render("change shape       ↑", 1, (105,105,105))
-      window.blit(label, (top_left_x - 210, top_left_y + 160))
+      window.blit(label, (40,265))
       font = pygame.font.SysFont('arial', 13)
       label = font.render("pause/unpause     space", 1, (105,105,105))
-      window.blit(label, (top_left_x - 210, top_left_y + 180))
+      window.blit(label, (40,285))
 
 def pause_text(text, size, color, surface):
       # Which font do you want to use?
@@ -268,9 +291,9 @@ def paused():
 
       pygame.mixer.pause()
       pause = True
-      window.fill((255,255,255))
-      draw_text_middle("PAUSED",60,(0,0,0),window)
-      pause_text("PRESS SPACE TO CONTINUE",40,(0,0,0),window)
+      window.fill((47,79,79))
+      draw_text_middle("PAUSED",60,(192,192,192),window)
+      pause_text("PRESS SPACE TO CONTINUE",40,(220,220,220),window)
       
       pygame.display.update()
       clock=pygame.time.Clock()
@@ -401,34 +424,34 @@ def clear_rows(grid,locked):
 def intro_text():
       font = pygame.font.SysFont('arial', 13)
       label = font.render("Welcome to the Classic TETRIS", 1, (105,105,105))
-      window.blit(label, (top_left_x - 215, top_left_y + 320))
+      window.blit(label, (35,420))
       font = pygame.font.SysFont('arial', 11)
       label = font.render("During a single gamerun your SCORE", 1, (105,105,105))
-      window.blit(label, (top_left_x - 215, top_left_y + 350))
+      window.blit(label, (35, 450))
       font = pygame.font.SysFont('arial', 11)
       label = font.render("and LEVEL progress will be saved", 1, (105,105,105))
-      window.blit(label, (top_left_x - 205, top_left_y + 362))
+      window.blit(label, (45, 462))
       font = pygame.font.SysFont('arial', 13)
       label = font.render("GAME consists of 4 LEVELS", 1, (105,105,105))
-      window.blit(label, (top_left_x - 205, top_left_y + 380))
+      window.blit(label, (47, 480))
       font = pygame.font.SysFont('arial', 13)
       label = font.render("starting from 0 ", 1, (105,105,105))
-      window.blit(label, (top_left_x - 165, top_left_y + 392))
+      window.blit(label, (85 , 492))
       font = pygame.font.SysFont('arial', 13)
       label = font.render("You unlock new levels at the ", 1, (105,105,105))
-      window.blit(label, (top_left_x - 205, top_left_y + 410))
+      window.blit(label, (45, 510 ))
       font = pygame.font.SysFont('arial', 13)
       label = font.render("SCORE of 50, 150 AND 300", 1, (105,105,105))
-      window.blit(label, (top_left_x - 205, top_left_y + 425))
+      window.blit(label, (45, 525))
       font = pygame.font.SysFont('arial', 13)
       label = font.render("With each level speed increases", 1, (105,105,105))
-      window.blit(label, (top_left_x - 215, top_left_y + 445))
+      window.blit(label, (35, 545))
       font = pygame.font.SysFont('arial', 11)
       label = font.render("RESET button will remove all your", 1, (255,0,0))
-      window.blit(label, (top_left_x - 205, top_left_y + 465))
+      window.blit(label, (45, 565))
       font = pygame.font.SysFont('arial', 11)
       label = font.render("SCORE and LEVEL progress", 1, (255,0,0))
-      window.blit(label, (top_left_x - 195, top_left_y + 480))
+      window.blit(label, (55, 580))
 
 def draw_window(surface):
       surface.fill((0,0,0))
@@ -443,56 +466,73 @@ def draw_window(surface):
 
       draw_grid(surface,20,10)
       pygame.draw.rect(surface,(128,128,128),(top_left_x,top_left_y,play_width,play_height),5)
-      pygame.draw.rect(surface,(50,50,50),(top_left_x-225,top_left_y+85,200,120),1)
+      pygame.draw.rect(surface,(50,50,50),(26,188,200,120),1)
       help_text()
-      pygame.draw.rect(surface,(50,50,50),(top_left_x-225,top_left_y+300,200,200),1)
+      pygame.draw.rect(surface,(50,50,50),(26,400,200,200),1)
       intro_text()
+      pause_button(surface)
       reset_button(surface)
       quit_button(surface)
+
+
+def pause_button(surface):
+
+      mouse = pygame.mouse.get_pos()
+      click = pygame.mouse.get_pressed()
+      if 630+80 > mouse[0] > 630 and 530+30 > mouse[1] > 530:
+            pygame.draw.rect(surface, (240,128,128),(630,530,80,30))
+            if click[0] == 1 :
+                  paused()
+                     
+      else:
+            pygame.draw.rect(surface, (250,128,114),(630,530,80,30))
+      
+      button_text = pygame.font.SysFont("freesansbold",22)
+      label= button_text.render('PAUSE',1,(0,0,0))
+      surface.blit(label,(645,540))
 
 
 def reset_button(surface):
 
       mouse = pygame.mouse.get_pos()
       click = pygame.mouse.get_pressed()
-      #print(mouse)
-      if 635+100 > mouse[0] > 635 and 575+50 > mouse[1] > 575:
-            pygame.draw.rect(surface, (128,128,128),(635,575,80,30))
+      if 630+80 > mouse[0] > 630 and 575+30 > mouse[1] > 575:
+            pygame.draw.rect(surface, (255,127,80),(630,575,80,30))
             if click[0] == 1 :
                   reset_window()
                      
       else:
-            pygame.draw.rect(surface, (220,220,220),(635,575,80,30))
+            pygame.draw.rect(surface, (255,99,71),(630,575,80,30))
       
       button_text = pygame.font.SysFont("freesansbold",22)
       label= button_text.render('RESET',1,(0,0,0))
-      surface.blit(label,(650,585))
+      surface.blit(label,(645,585))
       
 
 def quit_button(surface):
       mouse = pygame.mouse.get_pos()
       click = pygame.mouse.get_pressed()
-      if 635+100 > mouse[0] > 635 and 620+50 > mouse[1] > 620:
-            pygame.draw.rect(surface,(128,128,128),(635,620,80,30))
+      if 630+80 > mouse[0] > 630 and 620+30 > mouse[1] > 620:
+            pygame.draw.rect(surface,(216,191,216),(630,620,80,30))
             if click[0] == 1 :
                   quit_window()
 
       else:
-            pygame.draw.rect(surface,(220,220,220),(635,620,80,30))
+            pygame.draw.rect(surface,(221,160,221),(630,620,80,30))
 
 
       button_text = pygame.font.SysFont("freesansbold",22)
       label= button_text.render('QUIT',1,(0,0,0))
-      surface.blit(label,(656,630))
+      surface.blit(label,(652,630))
 
-
+ 
 
 
 def quit_window():
       pygame.mixer.pause()
       quitval = True
-      window.fill((0,0,0))
-      draw_text_middle("Press ESCAPE to quit and any other key to return to the game screen",25,(220,220,200),window)
+      window.fill((47,79,79))
+      draw_text_middle("Press ESCAPE to quit and any other key to return to the game screen",28,(211,211,211),window)
       pygame.display.update()
       clock=pygame.time.Clock()
       clock.tick(5)
@@ -515,8 +555,8 @@ def quit_window():
 def reset_window():
       pygame.mixer.pause()
       resetval = True
-      window.fill((0,0,0))
-      draw_text_middle("Press 'R' key to reset and any other key to return to the game screen",25,(220,220,200),window)
+      window.fill((47,79,79))
+      draw_text_middle("Press 'R' key to reset and any other key to return to the game screen",25,(211,211,211),window)
       pygame.display.update()
       clock=pygame.time.Clock()
       clock.tick(5)
