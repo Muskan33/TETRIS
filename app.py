@@ -173,7 +173,7 @@ def game():
             #pygame.mixer.unpause()
             
 # Display this text in the middle of the window
-            draw_text_start("Press start button to begin!", 60, (255, 255, 255), window)
+            draw_text_start("Click start button to begin!", 60, (255, 255, 255), window)
             start_button()
 # Update the screen
             pygame.display.update()
@@ -468,7 +468,7 @@ def draw_window(surface):
       pygame.draw.rect(surface,(128,128,128),(top_left_x,top_left_y,play_width,play_height),5)
       pygame.draw.rect(surface,(50,50,50),(26,188,180,120),1)
       help_text()
-      pygame.draw.rect(surface,(50,50,50),(26,400,180,200),1)
+      pygame.draw.rect(surface,(50,50,50),(26,400,200,200),1)
       intro_text()
       pause_button(surface)
       reset_button(surface)
